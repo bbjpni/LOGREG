@@ -10,8 +10,15 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/NevEmailInput"
-        android:hint="felhasznalónév"
+        android:id="@+id/EmailInput"
+        android:hint="Email"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/NevInput"
+        android:hint="Felhasznalónév"
         />
 
     <EditText
@@ -19,14 +26,15 @@
         android:layout_height="wrap_content"
         android:id="@+id/JelszoInput"
         android:inputType="textPassword"
-        android:hint="Jelszó"
+        android:hint="felhasznalónév"
         />
 
-    <Button
+    <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/LogInBtn"
-        android:text="Bejelentkezés"
+        android:id="@+id/TeljesNevInput"
+        android:inputType="text"
+        android:hint="Teljes név"
         />
 
     <Button
@@ -34,6 +42,13 @@
         android:layout_height="wrap_content"
         android:id="@+id/LogUpBtn"
         android:text="Regisztráció"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/BackBtn"
+        android:text="Vissza"
         />
 
 </LinearLayout>
