@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),adatbazis.Bejelentkezes(fehasz.getText().toString(),  jelszo.getText().toString()) ?
                         "Sikeres" : "Sikertelen",Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
+                startActivity(i);
             }
         });
     }
