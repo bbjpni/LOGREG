@@ -1,10 +1,12 @@
 package com.bzsomi.logreg;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class AndroidAB  extends SQLiteOpenHelper {
+public class dbhelper  extends SQLiteOpenHelper {
     public static final String ABnev = "felhasznalo.db";
     public static final String ABNEVE = "felhasznalo";
     public static final int ABversion = 1;
@@ -14,7 +16,7 @@ public class AndroidAB  extends SQLiteOpenHelper {
     public static final String OSZ_jelszo = "jelszo";
     public static final String OSZ_teljesnev = "teljesnev";
 
-    public AndroidAB(Context context)
+    public dbhelper(Context context)
     {
         super(context, ABnev, null, ABversion);
     }
@@ -32,5 +34,28 @@ public class AndroidAB  extends SQLiteOpenHelper {
         String sql = "DROP TABLE IF EXISTS " + ABNEVE;
         db.execSQL(sql);
         onCreate(db);
+    }
+
+    public boolean emailEllenorzes(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + ABNEVE + " WHERE " + OSZ_email + " = ?", new String[]{email});
+        return result.getCount() == 0;
+    }
+
+    public boolean nevEllenorzes(String nev) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + ABNEVE + " WHERE " + OSZ_felhnev + " = ?", new String[]{nev});
+        return result.getCount() == 0;
+    }
+
+    public boolean adatRogzites(String nev, String teljes, String email, String jelszo) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(OSZ_email, email);
+        values.put(OSZ_felhnev, nev);
+        values.put(OSZ_jelszo, jelszo);
+        values.put(OSZ_teljesnev, teljes);
+        return db.insert(ABNEVE, null, values) != -1;
+
     }
 }

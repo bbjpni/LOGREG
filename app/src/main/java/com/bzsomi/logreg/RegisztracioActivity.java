@@ -20,6 +20,7 @@ public class RegisztracioActivity extends AppCompatActivity {
 
     EditText Cemail, Cfehasz, Cjelszo, Cteljes;
     Button Creg, Cback;
+    dbhelper adatbazis;
 
     private void init(){
         Cemail = findViewById(R.id.EmailInput);
@@ -28,6 +29,8 @@ public class RegisztracioActivity extends AppCompatActivity {
         Cteljes = findViewById(R.id.TeljesNevInput);
         Creg = findViewById(R.id.SaveBtn);
         Cback = findViewById(R.id.BackBtn);
+
+        adatbazis = new dbhelper(RegisztracioActivity.this);
 
         Cback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -38,31 +41,52 @@ public class RegisztracioActivity extends AppCompatActivity {
 
         Creg.setOnClickListener(new View.OnClickListener() {
             @Override
+            // ELLENORZES //
             public void onClick(View v) {
                 if (Cemail.getText().toString().trim().equals("") )
                 {
-                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg e-mailt!!!",Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getApplicationContext(),"Nem adtál meg e-mailt!!!",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else if (Cfehasz.getText().toString().trim().equals("") )
                 {
-                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg felhaználónevet!!!",Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getApplicationContext(),"Nem adtál meg felhaználónevet!!!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (Cfehasz.getText().toString().trim().equals("") )
+                {
+                    Toast.makeText(getApplicationContext(),"Nem adtál meg felhaználónevet!!!",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else if (Cjelszo.getText().toString().trim().equals("") )
                 {
-                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg jelszót!!!",Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getApplicationContext(),"Nem adtál meg jelszót!!!",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else if (Cteljes.getText().toString().trim().equals("") || Cteljes.getText().toString().trim().split(" ").length < 2)
                 {
-                    Toast toast=Toast.makeText(getApplicationContext(),"Nem adtál meg teljes nevet!!!",Toast.LENGTH_SHORT);
-                    toast.show();
+                    Toast.makeText(getApplicationContext(),"Nem adtál meg teljes nevet!!!",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (!adatbazis.emailEllenorzes(Cemail.getText().toString().trim()))
+                {
+                    Toast.makeText(getApplicationContext(),"Az email cím már rögzítésre került",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (!adatbazis.nevEllenorzes(Cfehasz.getText().toString().trim()))
+                {
+                    Toast.makeText(getApplicationContext(),"A felhasználónév már rögzítésre került",Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 else
                 {
-                    Toast toast=Toast.makeText(getApplicationContext(),Cteljes.getText().toString().trim(),Toast.LENGTH_SHORT);
-                    toast.show();
+                    adatbazis.adatRogzites(
+                            Cfehasz.getText().toString().trim(),
+                            Cteljes.getText().toString().trim(),
+                            Cemail.getText().toString().trim(),
+                            Cjelszo.getText().toString().trim());
+                    Toast.makeText(getApplicationContext(),"A felhasználó létrehozva!",Toast.LENGTH_SHORT).show();
+                    return;
                 }
             }
         });

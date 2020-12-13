@@ -15,6 +15,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         init();
+        //dbhelper x = new dbhelper(MainActivity.this);
+        //x.onUpgrade(x.getWritableDatabase(),1,1);
     }
 
     EditText fehasz, jelszo;
