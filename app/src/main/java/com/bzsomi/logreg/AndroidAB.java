@@ -19,7 +19,6 @@ public class AndroidAB  extends SQLiteOpenHelper {
         super(context, ABnev, null, ABversion);
     }
 
-
     @Override
     public void onCreate(SQLiteDatabase db) {
         String sql = "CREATE TABLE IF NOT EXISTS " + ABNEVE + " (" + OSZ_id + " INTEGER PRIMARY KEY AUTOINCREMENT, "
