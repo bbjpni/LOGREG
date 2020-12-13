@@ -48,6 +48,16 @@ public class dbhelper  extends SQLiteOpenHelper {
         return result.getCount() == 0;
     }
 
+    public boolean Bejelentkezes(String felhasznalonev, String jelszo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + ABNEVE +
+                        " WHERE " + OSZ_felhnev + " = ?" +
+                        " OR " + OSZ_email + "= ?" +
+                        " AND " + OSZ_jelszo + "= ?",
+                new String[]{felhasznalonev, felhasznalonev, jelszo});
+        return result.getCount() == 1;
+    }
+
     public boolean adatRogzites(String nev, String teljes, String email, String jelszo) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
