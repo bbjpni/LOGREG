@@ -48,26 +48,34 @@ public class MainActivity extends AppCompatActivity {
         bej.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean pass = adatbazis.BejelentkezesNevvel(fehasz.getText().toString(),  jelszo.getText().toString());
-                if (!pass)
-                {
-                    pass = adatbazis.BejelentkezesEmaillal(fehasz.getText().toString(),  jelszo.getText().toString());
-                }
-                Toast.makeText(getApplicationContext(), pass ? "Sikeres" : "Sikertelen",Toast.LENGTH_SHORT).show();
-                if (pass){
-                    editor.putString("Nev", fehasz.getText().toString());
-                    editor.putString("Jelszo", jelszo.getText().toString());
-                    editor.commit();
-                    fehasz.setText("");
-                    jelszo.setText("");
-                    Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
-                    startActivity(i);
+                String[] adatok = {fehasz.getText().toString(), jelszo.getText().toString()};
+                if (adatok[0].isEmpty() || adatok[1].isEmpty()){
+                    Toast.makeText(getApplicationContext(), "Minden mezőt ki kell tölteni!",Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
-                    fehasz.setText("");
-                    jelszo.setText("");
+                    boolean pass = adatbazis.BejelentkezesNevvel(adatok[0], adatok[1]);
+                    if (!pass)
+                    {
+                        pass = adatbazis.BejelentkezesEmaillal(adatok[0], adatok[1]);
+                    }
+                    Toast.makeText(getApplicationContext(), pass ? "Sikeres" : "Sikertelen",Toast.LENGTH_SHORT).show();
+                    if (pass){
+                        editor.putString("Nev", fehasz.getText().toString());
+                        editor.putString("Jelszo", jelszo.getText().toString());
+                        editor.commit();
+                        fehasz.setText("");
+                        jelszo.setText("");
+                        Intent i = new Intent(MainActivity.this, LoggedInActivity.class);
+                        startActivity(i);
+                    }
+                    else
+                    {
+                        fehasz.setText("");
+                        jelszo.setText("");
+                    }
                 }
+
 
 
 

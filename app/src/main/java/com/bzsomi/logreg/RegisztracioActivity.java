@@ -53,17 +53,12 @@ public class RegisztracioActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Nem adtál meg felhaználónevet!!!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (Cfehasz.getText().toString().trim().equals("") )
-                {
-                    Toast.makeText(getApplicationContext(),"Nem adtál meg felhaználónevet!!!",Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 else if (Cjelszo.getText().toString().trim().equals("") )
                 {
                     Toast.makeText(getApplicationContext(),"Nem adtál meg jelszót!!!",Toast.LENGTH_SHORT).show();
                     return;
                 }
-                else if (Cteljes.getText().toString().trim().equals("") || Cteljes.getText().toString().trim().split(" ").length < 2)
+                else if (TeljesnevIgaz())
                 {
                     Toast.makeText(getApplicationContext(),"Nem adtál meg teljes nevet!!!",Toast.LENGTH_SHORT).show();
                     return;
@@ -94,5 +89,19 @@ public class RegisztracioActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean TeljesnevIgaz(){
+        String nev = Cteljes.getText().toString();
+        boolean back = true;
+        String[] resz = nev.split(" ");
+        for (int i = 0; i < resz.length && back; i++) {
+            String vizsgal = resz[i];
+            back = vizsgal.length() > 0;
+            if (back){
+                back = vizsgal.charAt(0) == vizsgal.toUpperCase().charAt(0);
+            }
+        }
+        return !back;
     }
 }
