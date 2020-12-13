@@ -85,6 +85,10 @@ public class RegisztracioActivity extends AppCompatActivity {
                             Cteljes.getText().toString().trim(),
                             Cemail.getText().toString().trim(),
                             Cjelszo.getText().toString().trim());
+                            Cfehasz.setText("");
+                            Cteljes.setText("");
+                            Cemail.setText("");
+                            Cjelszo.setText("");
                     Toast.makeText(getApplicationContext(),"A felhasználó létrehozva!",Toast.LENGTH_SHORT).show();
                     return;
                 }

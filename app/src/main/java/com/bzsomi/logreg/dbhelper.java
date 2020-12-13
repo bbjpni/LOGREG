@@ -48,14 +48,37 @@ public class dbhelper  extends SQLiteOpenHelper {
         return result.getCount() == 0;
     }
 
-    public boolean Bejelentkezes(String felhasznalonev, String jelszo) {
+    public boolean BejelentkezesNevvel(String felhasznalonev, String jelszo) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor result = db.rawQuery("SELECT * FROM " + ABNEVE +
+                        " WHERE " + OSZ_felhnev + " = ?" +
+                        " AND " + OSZ_jelszo + "= ?",
+                new String[]{felhasznalonev, jelszo});
+        return result.getCount() == 1;
+    }
+
+    public boolean BejelentkezesEmaillal(String felhasznalonev, String jelszo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + ABNEVE +
+                        " WHERE " + OSZ_email + " = ?" +
+                        " AND " + OSZ_jelszo + "= ?",
+                new String[]{felhasznalonev, jelszo});
+        return result.getCount() == 1;
+    }
+
+    public String teljesNev(String felhasznalonev, String jelszo) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor result = db.rawQuery("SELECT "+OSZ_teljesnev+" FROM " + ABNEVE +
                         " WHERE " + OSZ_felhnev + " = ?" +
                         " OR " + OSZ_email + "= ?" +
                         " AND " + OSZ_jelszo + "= ?",
                 new String[]{felhasznalonev, felhasznalonev, jelszo});
-        return result.getCount() == 1;
+        String back = "";
+        while (result.moveToNext())
+        {
+            back = result.getString(0);
+        }
+        return back;
     }
 
     public boolean adatRogzites(String nev, String teljes, String email, String jelszo) {
